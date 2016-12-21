@@ -1,0 +1,41 @@
+
+<table border="1">
+  <tr>
+    <th>姓名</th>
+    <th>部门</th>
+    <th>职位</th>
+    <th>直接主管</th>
+    <th>间接主管</th>
+    <th>平级同事</th>
+    <th>本职工作</th>
+    <th>特别贡献</th>
+    <th>个人成长</th>
+    <th>团队工作</th>
+    <th>团队成长</th>
+    <th>总分</th>
+    <th>等级系数</th>
+    <th>等级系数加权后</th>
+    <th>详情</th>
+  </tr>
+
+  <% @persons.each do |person| %>
+      <% scores = @results[person.id] %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.department_text %></td>
+        <td><%= person.title_text %></td>
+        <td><%= scores["boss"] %></td>
+        <td><%= scores["manager"] %></td>
+        <td><%= scores["mate"] %></td>
+        <td><%= scores["normal"] %></td>
+        <td><%= scores["special"] %></td>
+        <td><%= scores["growup"] %></td>
+        <td><%= scores["team-normal"] %></td>
+        <td><%= scores["team-growup"] %></td>
+        <td><%= scores["total"] %></td>
+        <td><%= person.salary_weight %></td>
+        <td><%= scores["salary-mixed"] %></td>
+        <td><%= link_to '评分记录', { controller: 'record', action: 'list', id: person}, target: '_blank' %></td>
+      </tr>
+  <% end %>
+</table>

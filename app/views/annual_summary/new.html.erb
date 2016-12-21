@@ -1,0 +1,51 @@
+<%= form_tag action: :create, method: :post do %>
+
+    <h3><%= @person.name %>的2016年度个人总结</h3>
+    <hr>
+
+    <% %w(one two three).each do |i| %>
+        <p>
+        <h3>本职工作<%= i %></h3>
+        <%= text_area_tag "normal_#{i}", nil, size: "50x4" %><br>
+        </p>
+    <% end %>
+    <hr>
+
+    <% %w(one two three).each do |i| %>
+        <p>
+        <h3>特别贡献<%= i %></h3>
+        <%= text_area_tag "special_#{i}", nil, size: "50x4" %><br>
+        </p>
+    <% end %>
+    <hr>
+
+    <% %w(one two).each do |i| %>
+        <p>
+        <h3>个人成长<%= i %></h3>
+        <%= text_area_tag "growup_#{i}", nil, size: "50x4" %><br>
+        </p>
+    <% end %>
+    <hr>
+
+    <% if @person.title == :manager %>
+        <% %w(one two three).each do |i| %>
+            <p>
+            <h3>团队本职工作<%= i %></h3>
+            <%= text_area_tag "team_normal_#{i}", nil, size: "50x4" %><br>
+            </p>
+        <% end %>
+        <hr>
+
+        <% %w(one two).each do |i| %>
+            <p>
+            <h3>团队成长<%= i %></h3>
+            <%= text_area_tag "team_growup_#{i}", nil, size: "50x4" %><br>
+            </p>
+        <% end %>
+        <hr>
+    <% end %>
+
+    <%= hidden_field_tag "person", @person.id %>
+
+    <%= submit_tag "提交" %>
+<% end %>

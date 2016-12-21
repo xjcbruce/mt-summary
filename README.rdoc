@@ -1,0 +1,9 @@
+CREATE SCHEMA `Summary_development` DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA `Summary_test` DEFAULT CHARACTER SET utf8;
+
+CREATE USER 'summary'@'localhost' IDENTIFIED BY '123456';
+# CREATE USER 'summary'@'%' IDENTIFIED BY '123456';
+
+GRANT ALL ON Summary_development.* TO 'summary'@'localhost';
+GRANT ALL ON Summary_test.* TO 'summary'@'localhost';
+

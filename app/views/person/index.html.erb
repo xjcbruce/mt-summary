@@ -1,0 +1,43 @@
+<h1>Team Members</h1>
+
+<table border="1">
+  <tr>
+    <th>姓名</th>
+    <th>部门</th>
+    <th>工资系数</th>
+    <th colspan="2">个人总结</th>
+    <th>打分</th>
+    <th>评分记录</th>
+    <th>打分对象</th>
+  </tr>
+
+  <% @persons.each do |person| %>
+      <% assignments = RateAssignment.assignments_to(person.name) %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.department_text %></td>
+        <td><%= person.salary_weight %></td>
+        <td><%= link_to input_summary_label(person), { controller: 'annual_summary', action: 'new', id: person}, target: '_blank' %></td>
+        <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
+        <td>
+          <% assignments.each do |a| %>
+              <% if a.done? %>
+                  <%= "#{a.rater_name}(已完成)" %>
+              <% else %>
+                  <%= link_to "#{a.rater_name}(#{a.url_code})", { controller: 'record', action: 'create', url_code: a.url_code }, target: '_blank' %>
+              <% end %>
+          <% end %>
+        </td>
+        <td><%= link_to '评分记录', { controller: 'record', action: 'list', id: person}, target: '_blank' %></td>
+        <td><%= link_to target_entry_label(person), { controller: 'person', action: 'list_target', code: person.access_code}, target: '_blank' %></td>
+      </tr>
+  <% end %>
+</table>
+
+<h2>Work Panel</h2>
+
+<ul>
+  <% %w(uidesign appdev serverdev pm).each do |department| %>
+      <li><%= link_to t("enumerize.person.department.#{department}"), { action: 'list', department: department}, target: '_blank' %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,11 @@
+<h1><%= @person.name %>你好！你需要为以下同事打分：</h1>
+
+<ui>
+  <% @assignments.each do |a| %>
+      <% if a.done? %>
+          <li><%= "#{a.target_person_name}(已完成)" %></li>
+      <% else %>
+          <li><%= link_to "#{a.target_person_name}", { controller: 'record', action: 'create', url_code: a.url_code }, target: '_blank' %></li>
+      <% end %>
+  <% end %>
+</ui>

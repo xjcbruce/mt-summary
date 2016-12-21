@@ -1,0 +1,2 @@
+module AnnualSummaryHelper
+end

@@ -1,0 +1,10 @@
+<h1><%= @person.name %>的2016年度总结</h1>
+
+<table border="1">
+  <% @person.annual_summary.summary_items.each do |item| %>
+    <tr>
+      <td><%= item.item_type_text %><%= item.item_no_text %></td>
+      <td><%= item.content %></td>
+    </tr>
+  <% end %>
+</table>

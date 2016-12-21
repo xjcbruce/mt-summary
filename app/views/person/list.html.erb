@@ -1,0 +1,18 @@
+<h1><%= t "enumerize.person.department.#{@department}" %>的2016年度总结</h1>
+
+<table border="1">
+  <tr>
+    <th>姓名</th>
+    <th>部门</th>
+    <th colspan="2">个人总结</th>
+  </tr>
+
+  <% @persons.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td><%= person.department_text %></td>
+        <td><%= link_to input_summary_label(person), { controller: 'annual_summary', action: 'new', id: person}, target: '_blank' %></td>
+        <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
+      </tr>
+  <% end %>
+</table>

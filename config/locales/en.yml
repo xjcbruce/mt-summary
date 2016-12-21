@@ -1,0 +1,49 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  enumerize:
+    person:
+      department:
+        uidesign: "设计部"
+        appdev: "客户端开发部"
+        serverdev: "服务器开发部"
+        pm: "产品质量与运营部"
+        prdanddev: "产品技术部"
+      title:
+        manager: "主管"
+        staff: "员工"
+    record:
+      rater_type:
+        boss: "直接主管"
+        manager: "间接主管"
+        mate: "平级同事"
+    summary_item:
+      item_type:
+        normal: "本职工作"
+        special: "特别贡献"
+        growup: "个人成长"
+        team_normal: "团队工作"
+        team_growup: "团队成长"
+      item_no:
+        one: "一"
+        two: "二"
+        three: "三"
