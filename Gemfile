@@ -37,6 +37,7 @@ group :development do
   gem 'capistrano-rbenv'
   # Add this if you're using rvm
   gem 'capistrano-rvm'
+  gem 'capistrano3-unicorn'
 end
 # gem 'capistrano-rails', group: :development
 
