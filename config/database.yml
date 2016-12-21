@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: Summary_production
-  username: Summary
-  password: <%= ENV['SUMMARY_DATABASE_PASSWORD'] %>
+  database: summary
+#  username: summary
+#  password: <%= ENV['SUMMARY_DATABASE_PASSWORD'] %>

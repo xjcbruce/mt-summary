@@ -7,3 +7,16 @@ CREATE USER 'summary'@'localhost' IDENTIFIED BY '123456';
 GRANT ALL ON Summary_development.* TO 'summary'@'localhost';
 GRANT ALL ON Summary_test.* TO 'summary'@'localhost';
 
+
+CREATE SCHEMA `summary` DEFAULT CHARACTER SET utf8;
+CREATE USER 'summary'@'localhost' IDENTIFIED BY '123456';
+GRANT ALL ON summary.* TO 'summary'@'localhost';
+
+
+## on server
+adduser deploy
+
+su deploy
+cd ~
+ssh-keygen -t rsa
+
