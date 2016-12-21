@@ -1,7 +1,7 @@
 # paths
 app_path = "/home/deploy/summary"
 working_directory "#{app_path}/current"
-pid               "#{app_path}/current/tmp/unicorn.pid"
+pid               "#{app_path}/current/tmp/pids/unicorn.pid"
 
 # listen
 listen "/tmp/unicorn.socket", :backlog => 64
