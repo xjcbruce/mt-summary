@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'record/index'
-
   # 页面: 全部员工
   get 'bruce1234567' => 'person#index'
   # 页面: 全部结果

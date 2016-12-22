@@ -15,3 +15,9 @@
 #/tmp/sessions
 
 /.idea
+/**/.keep
+lib/capistrano/
+tmp/sessions/
+tmp/sockets/
+tmp/pids/*
+!tmp/pids/pid

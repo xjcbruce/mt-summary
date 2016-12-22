@@ -35,7 +35,12 @@ en:
       rater_type:
         boss: "直接主管"
         manager: "间接主管"
-        mate: "平级同事"
+        mate: "同事身份"
+    rate_assignment:
+      rater_type:
+        boss: "直接主管"
+        manager: "间接主管"
+        mate: "同事身份"
     summary_item:
       item_type:
         normal: "本职工作"

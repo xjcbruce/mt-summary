@@ -98,9 +98,6 @@ class RecordController < ApplicationController
     end
   end
 
-  def index
-  end
-
   private
 
   def rp

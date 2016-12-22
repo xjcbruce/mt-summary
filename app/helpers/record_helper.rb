@@ -33,7 +33,7 @@ module RecordHelper
         radio_button_tag(attr, 4) + "这项工作他做得好，我点赞<br>".html_safe +
         radio_button_tag(attr, 3) + "这项工作他做得还可以，但我认为他还可以做得更好<br>".html_safe +
         radio_button_tag(attr, 2) + "就这项工作来说，我认为他做得不好<br>".html_safe +
-        radio_button_tag(attr, 1) + "就这项工作，我认为他就是完成个任务, 敷衍了事<br>".html_safe
+        radio_button_tag(attr, 1) + "就这项工作，我认为他就是完成个任务，敷衍了事<br>".html_safe
   end
 
   def select_for_special_question_one_tag(attr)
@@ -50,8 +50,8 @@ module RecordHelper
         radio_button_tag(attr, 5) + "这确实是杰出的贡献，并且完全由他主导<br>".html_safe +
         radio_button_tag(attr, 4) + "这确实是杰出的贡献，他是这项贡献的最重要的参与者<br>".html_safe +
         radio_button_tag(attr, 3) + "这确实是贡献，但我觉得一般，这不算是杰出<br>".html_safe +
-        radio_button_tag(attr, 2) + "这应该是他工作的一部分<br>".html_safe +
-        radio_button_tag(attr, 1) + "这跟他没什么关系<br>".html_safe
+        radio_button_tag(attr, 2) + "这应该是他工作的一部分，不能说是特别贡献<br>".html_safe +
+        radio_button_tag(attr, 1) + "这件事跟他没什么关系<br>".html_safe
   end
 
   def select_for_special_question_two_tag(attr)
@@ -69,7 +69,7 @@ module RecordHelper
         radio_button_tag(attr, 4) + "他做得好，我点赞<br>".html_safe +
         radio_button_tag(attr, 3) + "他做得还可以，但我认为他还可以做得更好<br>".html_safe +
         radio_button_tag(attr, 2) + "就这项贡献来说，我认为他做得不好<br>".html_safe +
-        radio_button_tag(attr, 1) + "我觉得他就是完成个任务<br>".html_safe
+        radio_button_tag(attr, 1) + "我觉得他仅是完成个任务而已<br>".html_safe
   end
 
   def select_for_growup_question_tag(attr)

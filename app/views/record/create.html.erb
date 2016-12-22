@@ -1,8 +1,9 @@
+<%= set_title "给#{@target_person.name}评分" %>
+
 <%= form_tag action: :rate, method: :post do %>
 
     <h3><%= @rater.name %> 你好!</h3>
-    <h3>你正在给 <%= @target_person.name %> 的2016年的年终工作总结打分</h3>
-    <h3>你是他的 <%= Record.rater_type_text @rater_type %></h3>
+    <h3>你正在给 <%= @target_person.name %> 的2016年的年终工作总结评分</h3>
     <hr>
 
     <% items = @summary.items %>
@@ -10,61 +11,62 @@
     <% %w(one two three).each do |i| %>
         <% item = items["normal-#{i}"] %>
         <% unless item.nil? or item.blank? %>
-          <p>
+            <p>
             <h3>本职工作<%= i %></h3><%= item %><br>
             <%= select_for_normal_question_one_tag "normal_#{i}_weight" %>
             <%= select_for_normal_question_two_tag "normal_#{i}_point" %>
-          </p>
+            </p>
+            <hr>
         <% end %>
     <% end %>
-    <hr>
 
     <% %w(one two three).each do |i| %>
         <% item = items["special-#{i}"] %>
         <% unless item.nil? or item.blank? %>
-          <p>
+            <p>
             <h3>特别贡献<%= i %></h3><%= item %><br>
             <%= select_for_special_question_one_tag "special_#{i}_weight" %>
             <%= select_for_special_question_two_tag "special_#{i}_point" %>
-          </p>
+            </p>
+            <hr>
         <% end %>
     <% end %>
-    <hr>
 
     <% %w(one two).each do |i| %>
         <% item = items["growup-#{i}"] %>
         <% unless item.nil? or item.blank? %>
-          <p>
+            <p>
             <h3>个人成长<%= i %></h3><%= item %><br>
             <%= select_for_growup_question_tag "growup_#{i}_point" %>
-          </p>
+            </p>
+            <hr>
         <% end %>
     <% end %>
-    <hr>
 
     <% if @target_person.is_manager %>
-      <% %w(one two three).each do |i| %>
-          <% item = items["team_normal-#{i}"] %>
-          <% unless item.nil? or item.blank? %>
-              <p>
-              <h3>团队工作<%= i %></h3><%= item %><br>
-              <%= select_for_normal_question_one_tag "team_normal_#{i}_weight" %>
-              <%= select_for_normal_question_two_tag "team_normal_#{i}_point" %>
-              </p>
-          <% end %>
-      <% end %>
-        <hr>
 
-      <% %w(one two).each do |i| %>
-          <% item = items["team_growup-#{i}"] %>
-          <% unless item.nil? or item.blank? %>
-              <p>
-              <h3>团队成长<%= i %></h3><%= item %><br>
-              <%= select_for_growup_question_tag "team_growup_#{i}_point" %>
-              </p>
-          <% end %>
-      <% end %>
-        <hr>
+        <% %w(one two three).each do |i| %>
+            <% item = items["team_normal-#{i}"] %>
+            <% unless item.nil? or item.blank? %>
+                <p>
+                <h3>团队工作<%= i %></h3><%= item %><br>
+                <%= select_for_normal_question_one_tag "team_normal_#{i}_weight" %>
+                <%= select_for_normal_question_two_tag "team_normal_#{i}_point" %>
+                </p>
+                <hr>
+            <% end %>
+        <% end %>
+
+        <% %w(one two).each do |i| %>
+            <% item = items["team_growup-#{i}"] %>
+            <% unless item.nil? or item.blank? %>
+                <p>
+                <h3>团队成长<%= i %></h3><%= item %><br>
+                <%= select_for_growup_question_tag "team_growup_#{i}_point" %>
+                </p>
+                <hr>
+            <% end %>
+        <% end %>
 
     <% end %>
 
