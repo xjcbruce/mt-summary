@@ -25,6 +25,7 @@ class PersonController < ApplicationController
     @person = Person.find_by(access_code: code_param)
     unless @person
       render :text => "查无此人。。。"
+      return
     end
 
     @assignments = RateAssignment.target_to(@person.name)

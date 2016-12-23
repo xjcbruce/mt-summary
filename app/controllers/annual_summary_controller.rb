@@ -1,5 +1,8 @@
 class AnnualSummaryController < ApplicationController
   def new
+    render :text => '录入时间已过。。。'
+    return
+    
     @person = Person.find(person_params)
 
     if @person.nil?
@@ -13,6 +16,7 @@ class AnnualSummaryController < ApplicationController
     person = Person.find(p["person"])
     if person.nil?
       render :text => '查无此人。。。'
+      return
     elsif person.annual_summary != nil
       person.annual_summary.destroy
     end
