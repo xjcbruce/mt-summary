@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # 页面: 全部员工
   get 'bruce1234567' => 'person#index'
   # 页面: 全部结果
-  get 'bruce7654321' => 'person#result'
+  get 'all_result' => 'person#result'
 
   # 页面: 评分录入
   get 'record/create/:url_code' => 'record#create'
@@ -23,6 +23,11 @@ Rails.application.routes.draw do
   get 'department/:department' => 'person#list'
   # 页面: 目标打分对象入口页面
   get 'rater/:code' => 'person#list_target'
+
+  # 动作: 导出列表到excel
+  get 'export/list.xlsx' => 'person#export_result_list', defaults: { format: 'xlsx' }
+  # 页面: 个人报告
+  get 'report/:code' => 'person#report_to_one'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

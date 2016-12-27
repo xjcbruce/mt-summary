@@ -1,0 +1,257 @@
+<%= set_title "#{@person.name}的2016年度总结报告" %>
+<h3>2016年度总结报告 - <%= @person.name %>(<%= @person.department_text %><%= @person.title_text %>)</h3>
+
+<% scores = @person.scores %>
+<% records = @person.records %>
+
+<table border="1">
+  <tr>
+    <th>总结项目</th>
+    <th>总结内容</th>
+  </tr>
+
+  <tr>
+    <td>本职工作</td>
+    <td>
+      <ul>
+        <%= li_item @summary_items["normal-one"] %>
+        <%= li_item @summary_items["normal-two"] %>
+        <%= li_item @summary_items["normal-three"] %>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>特别贡献</td>
+    <td>
+      <ul>
+        <%= li_item @summary_items["special-one"] %>
+        <%= li_item @summary_items["special-two"] %>
+        <%= li_item @summary_items["special-three"] %>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>个人成长</td>
+    <td>
+      <ul>
+        <%= li_item @summary_items["growup-one"] %>
+        <%= li_item @summary_items["growup-two"] %>
+      </ul>
+    </td>
+  </tr>
+
+  <% if @person.is_manager %>
+    <tr>
+      <td>团队工作</td>
+      <td>
+        <ul>
+          <%= li_item @summary_items["team_normal-one"] %>
+          <%= li_item @summary_items["team_normal-two"] %>
+          <%= li_item @summary_items["team_normal-three"] %>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>团队成长</td>
+      <td>
+        <ul>
+          <%= li_item @summary_items["team_growup-one"] %>
+          <%= li_item @summary_items["team_growup-two"] %>
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3>评分汇总:</h3>
+
+<table border="1">
+  <tr>
+    <th>直接主管评分</th>
+    <th>间接主管评分</th>
+    <th>一般同事评分</th>
+  </tr>
+
+  <tr>
+    <td><%= scores["boss"] %></td>
+    <td><%= scores["manager"] %></td>
+    <td><%= scores["mate"] %></td>
+  </tr>
+</table>
+
+<table border="1">
+  <tr>
+    <th>本职工作得分</th>
+    <th>特别贡献得分</th>
+    <th>个人成长得分</th>
+    <% if @person.is_manager %>
+        <th>团队工作得分</th>
+        <th>团队成长得分</th>
+    <% end %>
+  </tr>
+
+  <tr>
+    <td><%= scores["normal"] %></td>
+    <td><%= scores["special"] %></td>
+    <td><%= scores["growup"] %></td>
+    <% if @person.is_manager %>
+        <td><%= scores["team-normal"] %></td>
+        <td><%= scores["team-growup"] %></td>
+    <% end %>
+  </tr>
+</table>
+
+<table border="1">
+  <tr>
+    <th>总分</th>
+    <th>工资系数</th>
+    <th>工资系数加权后</th>
+  </tr>
+
+  <tr>
+    <td><%= scores["total"] %></td>
+    <td><%= @person.salary_weight %></td>
+    <td><%= scores["salary-mixed"] %></td>
+  </tr>
+</table>
+
+<br>
+
+<h3>评分详情:</h3>
+
+<table border="1">
+  <tr>
+    <th>打分者身份</th>
+    <th>本1/1</th>
+    <th>本1/2</th>
+    <% unless @summary_items["normal-two"].empty? %>
+        <th>本2/1</th>
+        <th>本2/2</th>
+    <% end %>
+    <% unless @summary_items["normal-three"].empty? %>
+    <th>本3/1</th>
+    <th>本3/2</th>
+    <% end %>
+    <% unless @summary_items["special-one"].empty? %>
+    <th>特1/1</th>
+    <th>特1/2</th>
+    <% end %>
+    <% unless @summary_items["special-two"].empty? %>
+    <th>特2/1</th>
+    <th>特2/2</th>
+    <% end %>
+    <% unless @summary_items["special-three"].empty? %>
+    <th>特3/1</th>
+    <th>特3/2</th>
+    <% end %>
+    <% unless @summary_items["growup-one"].empty? %>
+    <th>成1</th>
+    <% end %>
+    <% unless @summary_items["growup-two"].empty? %>
+    <th>成2</th>
+    <% end %>
+    <th>本职工作</th>
+    <th>特别贡献</th>
+    <th>个人成长</th>
+    <% unless @person.is_manager %>
+        <th>评分者加权(原始总分)</th>
+    <% end %>
+  </tr>
+
+  <% records.each do |record| %>
+      <%
+        options = record.answer_options
+        values = record.answer_values
+        totals = record.calculate
+      %>
+      <tr>
+        <td><%= record.rater_type_text %></td>
+        <td><%= values["normal-one-weight"] %>(<%= options["normal-one-weight"] %>)</td>
+        <td><%= values["normal-one-point"] %>(<%= options["normal-one-point"] %>)</td>
+
+        <% unless @summary_items["normal-two"].empty? %>
+        <td><%= values["normal-two-weight"] %>(<%= options["normal-two-weight"] %>)</td>
+        <td><%= values["normal-two-point"] %>(<%= options["normal-two-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["normal-three"].empty? %>
+        <td><%= values["normal-three-weight"] %>(<%= options["normal-three-weight"] %>)</td>
+        <td><%= values["normal-three-point"] %>(<%= options["normal-three-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["special-one"].empty? %>
+        <td><%= values["special-one-weight"] %>(<%= options["special-one-weight"] %>)</td>
+        <td><%= values["special-one-point"] %>(<%= options["special-one-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["special-two"].empty? %>
+        <td><%= values["special-two-weight"] %>(<%= options["special-two-weight"] %>)</td>
+        <td><%= values["special-two-point"] %>(<%= options["special-two-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["special-three"].empty? %>
+        <td><%= values["special-three-weight"] %>(<%= options["special-three-weight"] %>)</td>
+        <td><%= values["special-three-point"] %>(<%= options["special-three-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["growup-one"].empty? %>
+        <td><%= values["growup-one-point"] %>(<%= options["growup-one-point"] %>)</td>
+        <% end %>
+
+        <% unless @summary_items["growup-two"].empty? %>
+        <td><%= values["growup-two-point"] %>(<%= options["growup-two-point"] %>)</td>
+        <% end %>
+
+        <td><%= totals["normal-total-weight"] %>(<%= totals["normal-total"] %>)</td>
+        <td><%= totals["special-total-weight"] %>(<%= totals["special-total"] %>)</td>
+        <td><%= totals["growup-total-weight"] %>(<%= totals["growup-total"] %>)</td>
+        <% unless @person.is_manager %>
+            <td><%= totals["rater-total"] %>(<%= totals["source-total"] %>)</td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+
+<% if @person.is_manager %>
+    <table border="1">
+      <tr>
+        <th>打分者身份</th>
+        <th>团工1/1</th>
+        <th>团工1/2</th>
+        <th>团工2/1</th>
+        <th>团工2/2</th>
+        <th>团工3/1</th>
+        <th>团工3/2</th>
+        <th>团成1</th>
+        <th>团成2</th>
+        <th>团队工作</th>
+        <th>团队成长</th>
+        <th>评分者加权(原始总分)</th>
+      </tr>
+
+      <% records.each do |record| %>
+          <%
+            options = record.answer_options
+            values = record.answer_values
+            totals = record.calculate
+          %>
+          <tr>
+            <td><%= record.rater_type_text %></td>
+            <td><%= values["team_normal-one-weight"] %>(<%= options["team_normal-one-weight"] %>)</td>
+            <td><%= values["team_normal-one-point"] %>(<%= options["team_normal-one-point"] %>)</td>
+            <td><%= values["team_normal-two-weight"] %>(<%= options["team_normal-two-weight"] %>)</td>
+            <td><%= values["team_normal-two-point"] %>(<%= options["team_normal-two-point"] %>)</td>
+            <td><%= values["team_normal-three-weight"] %>(<%= options["team_normal-three-weight"] %>)</td>
+            <td><%= values["team_normal-three-point"] %>(<%= options["team_normal-three-point"] %>)</td>
+            <td><%= values["team_growup-one-point"] %>(<%= options["team_growup-one-point"] %>)</td>
+            <td><%= values["team_growup-two-point"] %>(<%= options["team_growup-two-point"] %>)</td>
+            <td><%= totals["team-normal-total-weight"] %>(<%= totals["team-normal-total"] %>)</td>
+            <td><%= totals["team-growup-total-weight"] %>(<%= totals["team-growup-total"] %>)</td>
+            <td><%= totals["rater-total"] %>(<%= totals["source-total"] %>)</td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

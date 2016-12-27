@@ -13,14 +13,16 @@
     <th>个人成长</th>
     <th>团队工作</th>
     <th>团队成长</th>
-    <th>总分</th>
-    <th>等级系数</th>
+    <!--<th>总分</th>-->
+    <!--<th>等级系数</th>-->
     <th>等级系数加权后</th>
-    <th>详情</th>
+    <th>个人总结</th>
+    <th>评分报告</th>
   </tr>
 
   <% @persons.each do |person| %>
-      <% scores = @results[person.id] %>
+      <% next if person.name == '杨宇波' %>
+      <% scores = person.scores %>
       <tr>
         <td><%= person.name %></td>
         <td><%= person.department_text %></td>
@@ -33,10 +35,15 @@
         <td><%= scores["growup"] %></td>
         <td><%= scores["team-normal"] %></td>
         <td><%= scores["team-growup"] %></td>
-        <td><%= scores["total"] %></td>
-        <td><%= person.salary_weight %></td>
+        <!--<td><%= scores["total"] %></td>-->
+        <!--<td><%= person.salary_weight %></td>-->
         <td><%= scores["salary-mixed"] %></td>
-        <td><%= link_to '评分记录', { controller: 'record', action: 'list', id: person}, target: '_blank' %></td>
+        <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
+        <td><%= link_to '查看', { controller: 'person', action: 'report_to_one', code: person.access_code}, target: '_blank' %></td>
       </tr>
   <% end %>
 </table>
+
+<hr>
+
+<%= link_to "导出到Excel", { action: 'export_result_list' }  %>

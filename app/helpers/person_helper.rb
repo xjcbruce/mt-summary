@@ -8,4 +8,8 @@ module PersonHelper
     "#{RateAssignment.target_number(person.name)}个打分对象"
   end
 
+  def li_item(item)
+    item.empty? ? "" : "<li>#{item}</li>".html_safe
+  end
+
 end

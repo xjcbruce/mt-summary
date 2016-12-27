@@ -1,0 +1,19 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "2016年度总结评分总表") do |sheet|
+
+    sheet.add_row ["姓名", "部门", "职位",
+        "直接主管评分", "间接主管评分", "同事评分",
+        "本职工作得分", "特别贡献得分", "个人成长得分",
+        "团队工作得分", "团队成长得分", "原始总分", "等级系数加权后总分"]
+
+    @persons.each do |person|
+        scores = person.scores
+
+        sheet.add_row [person.name, person.department_text, person.title_text,
+            scores["boss"], scores["manager"], scores["mate"],
+            scores["normal"], scores["special"], scores["growup"],
+            scores["team-normal"], scores["team-growup"], scores["total"], scores["salary-mixed"]]
+    end
+
+end

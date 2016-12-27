@@ -6,11 +6,25 @@ class PersonController < ApplicationController
 
   def result
     @persons = Person.all
-    @results = Hash.new(0.0)
+    # @results = Hash.new(0.0)
+    #
+    # @persons.each do |p|
+    #   @results[p.id] = p.scores
+    # end
+  end
 
-    @persons.each do |p|
-      @results[p.id] = p.scores
-    end
+  def export_result_list
+    @persons = Person.all
+    # @results = Hash.new(0.0)
+    #
+    # @persons.each do |p|
+    #   @results[p.id] = p.scores
+    # end
+
+    render :xlsx => "export_result_list", :filename => "2016list.xlsx"
+    # respond_to do |format|
+    #   format.xlsx
+    # end
   end
 
   def list
@@ -29,6 +43,16 @@ class PersonController < ApplicationController
     end
 
     @assignments = RateAssignment.target_to(@person.name)
+  end
+
+  def report_to_one
+    @person = Person.find_by(access_code: code_param)
+    unless @person
+      render :text => "查无此人。。。"
+      return
+    end
+
+    @summary_items = @person.annual_summary.items
   end
 
   private

@@ -6,6 +6,7 @@
     <th>姓名</th>
     <th>部门</th>
     <th colspan="2">个人总结</th>
+    <th>报告</th>
   </tr>
 
   <% @persons.each do |person| %>
@@ -14,6 +15,7 @@
         <td><%= person.department_text %></td>
         <td><%= link_to input_summary_label(person), { controller: 'annual_summary', action: 'new', id: person}, target: '_blank' %></td>
         <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
+        <td><%= link_to '报告', { controller: 'person', action: 'report_to_one', code: person.access_code}, target: '_blank' %></td>
       </tr>
   <% end %>
 </table>

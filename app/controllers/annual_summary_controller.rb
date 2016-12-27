@@ -2,7 +2,7 @@ class AnnualSummaryController < ApplicationController
   def new
     render :text => '录入时间已过。。。'
     return
-    
+
     @person = Person.find(person_params)
 
     if @person.nil?

@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
   end
 
   def is_manager
-    self.title != :mate ? true : false
+    (self.title != :staff) ? true : false
   end
 
   def has_summary?
