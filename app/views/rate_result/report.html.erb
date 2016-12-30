@@ -1,0 +1,162 @@
+<%= set_title "#{@person.name}的2016年终总结报告" %>
+
+<table border="1" align="center" width="80%">
+  <tr>
+    <td colspan="4" align="center"><strong>2016年终总结报告</strong></td>
+  </tr>
+
+  <tr align="center">
+    <td width="20%"><%= @person.name %></td>
+    <td width="20%"><%= @person.department_text %></td>
+    <td width="20%"><%= @person.title_text %></td>
+    <td width="20%">
+      <%= "总分#{@result.total} / 排名第#{@result.team_rank}" %><br>
+    </td>
+  </tr>
+
+  <tr></tr><tr></tr>
+
+  <tr>
+    <td colspan="4"><strong>&nbsp;&nbsp;&nbsp;&nbsp;工作总结</strong></td>
+  </tr>
+
+  <tr>
+    <td rowspan="3" align="center">本职工作</td>
+    <td colspan="3"><%= show_text @summary["normal-one"] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= show_text @summary["normal-two"] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= show_text @summary["normal-three"] %></td>
+  </tr>
+
+  <tr>
+    <td rowspan="3" align="center">特别贡献</td>
+    <td colspan="3"><%= show_text @summary["special-one"] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= show_text @summary["special-two"] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= show_text @summary["special-three"] %></td>
+  </tr>
+
+  <tr>
+    <td rowspan="2" align="center">个人成长</td>
+    <td colspan="3"><%= show_text @summary["growup-one"] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= show_text @summary["growup-two"] %></td>
+  </tr>
+
+  <% if @person.is_manager %>
+      <tr>
+        <td rowspan="3" align="center">团队工作</td>
+        <td colspan="3"><%= show_text @summary["team_normal-one"] %></td>
+      </tr>
+      <tr>
+        <td colspan="3"><%= show_text @summary["team_normal-two"] %></td>
+      </tr>
+      <tr>
+        <td colspan="3"><%= show_text @summary["team_normal-three"] %></td>
+      </tr>
+
+      <tr>
+        <td rowspan="2" align="center">团队成长</td>
+        <td colspan="3"><%= show_text @summary["team_growup-one"] %></td>
+      </tr>
+      <tr>
+        <td colspan="3"><%= show_text @summary["team_growup-two"] %></td>
+      </tr>
+  <% end %>
+
+  <tr></tr><tr></tr><tr></tr><tr></tr>
+
+  <tr>
+    <td colspan="4"><strong>&nbsp;&nbsp;&nbsp;&nbsp;同事评分</strong></td>
+  </tr>
+
+  <tr align="center">
+    <td>直接主管评分</td><td><%= @result.boss_point %></td>
+    <% if @person.is_manager %>
+        <td></td><td></td>
+    <% else %>
+        <td>间接主管评分</td><td><%= @result.manager_point %></td>
+    <% end %>
+  </tr>
+  <tr align="center">
+    <td>同事一评分</td><td><%= @result.mate_one_point %></td>
+    <td>同事二评分</td><td><%= @result.mate_two_point %></td>
+  </tr>
+  <tr align="center">
+    <td>同事三评分</td><td><%= @result.mate_three_point %></td>
+    <td>同事平均分</td><td><%= @result.mate_average_point %></td>
+  </tr>
+
+  <tr></tr><tr></tr>
+
+  <tr>
+    <td colspan="4"><strong>&nbsp;&nbsp;&nbsp;&nbsp;得分组成</strong></td>
+  </tr>
+
+  <tr align="center">
+    <td>本职工作得分</td><td><%= @result.normal_total %></td>
+    <td>本职工作排名</td><td><%= "第#{@result.normal_rank}名" %></td>
+  </tr>
+  <tr align="center">
+    <td>特别贡献得分</td><td><%= @result.special_total %></td>
+    <td>特别贡献排名</td><td><%= "第#{@result.special_rank}名" %></td>
+  </tr>
+  <tr align="center">
+    <td>个人成长得分</td><td><%= @result.growup_total %></td>
+    <td>个人成长排名</td><td><%= "第#{@result.growup_rank}名" %></td>
+  </tr>
+
+  <% if @person.is_manager %>
+      <tr align="center">
+        <td>团队工作得分</td><td><%= @result.team_normal_total %></td>
+        <td>团队工作排名</td><td><%= "第#{@result.team_normal_rank}名" %></td>
+      </tr>
+      <tr align="center">
+        <td>团队成长得分</td><td><%= @result.team_growup_total %></td>
+        <td>团队成长排名</td><td><%= "第#{@result.team_growup_rank}名" %></td>
+      </tr>
+  <% end %>
+
+  <% if @result.extra_point != 0 %>
+      <tr align="center">
+        <!--<td>等级系数</td><td><%= @result.salary_weight %></td>-->
+        <td>额外调整</td><td>工作态度加<%= @result.extra_point %></td>
+        <td></td><td></td>
+      </tr>
+  <% end %>
+
+  <tr></tr><tr></tr><tr></tr><tr></tr>
+
+  <tr align="center">
+    <td><strong>最终总分</strong></td><td><%= @result.total %></td>
+    <td><strong>团队排名</strong></td>
+    <td>
+      <%= "全员第#{@result.team_rank}名(共#{@numbers.first}人)" %><br>
+      <% if @person.is_manager %>
+          <%= "主管第#{@result.group_rank}名(共#{@numbers.last}人)" %>
+      <% else %>
+          <%= "#{@person.department_text}第#{@result.group_rank}名(共#{@numbers.last}人)" %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="4"><i><small>&nbsp;&nbsp;&nbsp;&nbsp;注：最终总分经过等级工资系数加权</small></i></td>
+  </tr>
+
+</table>
+
+<table align="center" width="80%">
+  <tr>
+    <td colspan="4" align="center">
+      <%= link_to '下载Excel报告', { controller: 'rate_result', action: 'report', format: 'xlsx', code: @person.access_code} %>
+    </td>
+  </tr>
+</table>

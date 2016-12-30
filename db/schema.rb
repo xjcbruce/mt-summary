@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161220070534) do
+ActiveRecord::Schema.define(version: 20161228032351) do
 
   create_table "annual_summaries", force: :cascade do |t|
     t.integer  "person_id",  limit: 4, null: false
@@ -68,6 +68,33 @@ ActiveRecord::Schema.define(version: 20161220070534) do
   end
 
   add_index "rate_assignments", ["url_code"], name: "index_rate_assignments_on_url_code", using: :btree
+
+  create_table "rate_results", force: :cascade do |t|
+    t.integer  "person_id",          limit: 4,                null: false
+    t.float    "boss_point",         limit: 24, default: 0.0
+    t.float    "manager_point",      limit: 24, default: 0.0
+    t.float    "mate_one_point",     limit: 24, default: 0.0
+    t.float    "mate_two_point",     limit: 24, default: 0.0
+    t.float    "mate_three_point",   limit: 24, default: 0.0
+    t.float    "mate_average_point", limit: 24, default: 0.0
+    t.float    "normal_total",       limit: 24, default: 0.0
+    t.float    "special_total",      limit: 24, default: 0.0
+    t.float    "growup_total",       limit: 24, default: 0.0
+    t.float    "team_normal_total",  limit: 24, default: 0.0
+    t.float    "team_growup_total",  limit: 24, default: 0.0
+    t.float    "salary_weight",      limit: 24, default: 0.0
+    t.float    "extra_point",        limit: 24, default: 0.0
+    t.float    "total",              limit: 24, default: 0.0
+    t.integer  "normal_rank",        limit: 4,  default: 0
+    t.integer  "special_rank",       limit: 4,  default: 0
+    t.integer  "growup_rank",        limit: 4,  default: 0
+    t.integer  "team_normal_rank",   limit: 4,  default: 0
+    t.integer  "team_growup_rank",   limit: 4,  default: 0
+    t.integer  "team_rank",          limit: 4,  default: 0
+    t.integer  "group_rank",         limit: 4,  default: 0
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
 
   create_table "record_details", force: :cascade do |t|
     t.integer  "record_id",         limit: 4,               null: false

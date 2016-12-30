@@ -1,0 +1,134 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: @person.name) do |sheet|
+
+    wrap_line_height = 50
+
+    wb.styles.fonts.first.name = '微软雅黑'
+
+    blank_line = wb.styles.add_style :bg_color => "FF"
+    blank_cell = wb.styles.add_style :bg_color => "FF"
+    border_blank_cell = wb.styles.add_style :bg_color => "FF", :border => { :style => :thin, :color =>"00", :edges => [:left, :right, :top, :bottom] }
+
+    header_line = wb.styles.add_style :bg_color => "FF", :sz => 16, :b => true, :alignment => { :horizontal => :center }
+
+    name_cell = wb.styles.add_style :bg_color => "FF", :sz => 14, :b => true, :alignment => { :horizontal => :center }, :border => { :style => :thin, :color =>"00", :edges => [:bottom] }
+
+    group_cell = wb.styles.add_style :bg_color => "FF", :sz => 12, :b => true, :i => true, :border => { :style => :thick, :color =>"00", :edges => [:left] }, :alignment => { :horizontal => :center }
+
+    title_cell = wb.styles.add_style :bg_color => "FF", :sz => 12, :b => true, :alignment => { :horizontal => :center, :vertical => :center }, :border => { :style => :thin, :color =>"00", :edges => [:left, :right, :top, :bottom] }
+
+    text_cell = wb.styles.add_style :bg_color => "FF", :sz => 12, :alignment => { :horizontal => :center, :vertical => :center }, :border => { :style => :thin, :color =>"00", :edges => [:left, :right, :top, :bottom] }
+
+    wrap_text_cell = wb.styles.add_style :bg_color => "FF", :sz => 12, :alignment => { :horizontal => :left, :vertical => :top, :wrap_text => true }, :border => { :style => :thin, :color =>"00", :edges => [:left, :right, :top, :bottom] }
+
+    comments_cell = wb.styles.add_style :bg_color => "FF", :sz => 10, :i => true, :alignment => { :horizontal => :left, :vertical => :center }
+
+
+
+    sheet.add_row [], :style => blank_line
+
+    sheet.add_row ["", "2016年度 年终工作总结", "", "", ""], :style => header_line
+
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", @person.name, @person.department_text, @person.title_text, "总分#{@result.total} / 排名第#{@result.team_rank}"], :style => [nil, name_cell, name_cell, name_cell, name_cell]
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "工作总结", "", "", ""], :style => [nil, group_cell, blank_cell, blank_cell, blank_cell]
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "本职工作", @summary["normal-one"], "", ""], :style => [nil, title_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    sheet.add_row ["", "", @summary["normal-two"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    sheet.add_row ["", "", @summary["normal-three"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+
+    sheet.add_row ["", "特别贡献", @summary["special-one"], "", ""], :style => [nil, title_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    sheet.add_row ["", "", @summary["special-two"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    sheet.add_row ["", "", @summary["special-three"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+
+    sheet.add_row ["", "个人成长", @summary["growup-one"], "", ""], :style => [nil, title_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    sheet.add_row ["", "", @summary["growup-two"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+
+    if @person.is_manager
+        sheet.add_row ["", "团队工作", @summary["team_normal-one"], "", ""], :style => [nil, title_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+        sheet.add_row ["", "", @summary["team_normal-two"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+        sheet.add_row ["", "", @summary["team_normal-three"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+
+        sheet.add_row ["", "团队成长", @summary["team_growup-one"], "", ""], :style => [nil, title_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+        sheet.add_row ["", "", @summary["team_growup-two"], "", ""], :style => [nil, border_blank_cell, wrap_text_cell, border_blank_cell, border_blank_cell], :height => wrap_line_height
+
+    end
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "同事评分", "", "", ""], :style => [nil, group_cell, blank_cell, blank_cell, blank_cell]
+
+    sheet.add_row [], :style => blank_line
+
+
+    if @person.is_manager
+        sheet.add_row ["", "直接主管评分", @result.boss_point, "", ""], :style => [nil, title_cell, text_cell, nil, nil]
+    else
+        sheet.add_row ["", "直接主管评分", @result.boss_point, "间接主管评分", @result.manager_point], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    end
+    sheet.add_row ["", "同事一评分", @result.mate_one_point, "同事二评分", @result.mate_two_point], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    sheet.add_row ["", "同事三评分", @result.mate_three_point, "同事平均评分", @result.mate_average_point], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "得分组成", "", "", ""], :style => [nil, group_cell, blank_cell, blank_cell, blank_cell]
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "本职工作得分", @result.normal_total, "本职工作排名", "第#{@result.normal_rank}名"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    sheet.add_row ["", "特别贡献得分", @result.special_total, "特别贡献排名", "第#{@result.special_rank}名"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    sheet.add_row ["", "个人成长得分", @result.growup_total, "个人成长排名", "第#{@result.growup_rank}名"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    if @person.is_manager
+        sheet.add_row ["", "团队工作得分", @result.team_normal_total, "团队工作排名", "第#{@result.team_normal_rank}名"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+        sheet.add_row ["", "团队成长得分", @result.team_growup_total, "团队成长排名", "第#{@result.team_growup_rank}名"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    end
+
+    if @result.extra_point != 0
+        sheet.add_row ["", "额外调整", "工作态度加#{@result.extra_point}", "", ""], :style => [nil, title_cell, text_cell, nil, nil]
+    else
+        sheet.add_row ["", "额外调整", "无", "", ""], :style => [nil, title_cell, text_cell, nil, nil]
+    end
+
+    sheet.add_row [], :style => blank_line
+
+
+    sheet.add_row ["", "最终总分", @result.total, "团队排名", "全员第#{@result.team_rank}名(共#{@numbers.first}人)"], :style => [nil, title_cell, text_cell, title_cell, text_cell]
+    if @person.is_manager
+        sheet.add_row ["", "", "", "", "主管第#{@result.group_rank}名(共#{@numbers.last}人)"], :style => [nil, border_blank_cell, border_blank_cell, border_blank_cell, text_cell]
+    else
+        sheet.add_row ["", "", "", "", "#{@person.department_text}第#{@result.group_rank}名(共#{@numbers.last}人)"], :style => [nil, border_blank_cell, border_blank_cell, border_blank_cell, text_cell]
+    end
+
+    sheet.add_row ["", "        注：最终总分经过等级工资系数加权", "", "", ""], :style => [nil, comments_cell, blank_cell, blank_cell, blank_cell]
+
+    report_merge_cells(sheet, @person)
+
+    sheet.column_widths nil, 25, 25, 25, 25, nil
+
+    sheet.page_setup.fit_to :width => 1, :height => 1
+end

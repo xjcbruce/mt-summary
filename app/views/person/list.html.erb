@@ -14,8 +14,8 @@
         <td><%= person.name %></td>
         <td><%= person.department_text %></td>
         <td><%= link_to input_summary_label(person), { controller: 'annual_summary', action: 'new', id: person}, target: '_blank' %></td>
-        <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
-        <td><%= link_to '报告', { controller: 'person', action: 'report_to_one', code: person.access_code}, target: '_blank' %></td>
+        <td><%= link_to '查看总结', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
+        <td><%= link_to '查看报告', { controller: 'rate_result', action: 'report', code: person.access_code}, target: '_blank' %></td>
       </tr>
   <% end %>
 </table>

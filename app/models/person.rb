@@ -1,6 +1,8 @@
 class Person < ActiveRecord::Base
   extend Enumerize
 
+  self.table_name = "people"
+
   enumerize :department, in: [:uidesign, :appdev, :serverdev, :pm, :prdanddev]
 
   enumerize :title, in: [:manager, :staff]
@@ -10,6 +12,8 @@ class Person < ActiveRecord::Base
   has_many :records, inverse_of: :target_person, foreign_key: 'target_person_id'
 
   has_one :annual_summary, inverse_of: :person
+
+  has_one :rate_result, inverse_of: :person
 
   before_create :generate_code
   def generate_code
@@ -53,6 +57,9 @@ class Person < ActiveRecord::Base
   def scores
     scores = Hash.new(0)
 
+    # add each mate total scores
+    mate_scores = []
+
     mate_num = 0
     records.each do |r|
       result = r.calculate
@@ -76,6 +83,8 @@ class Person < ActiveRecord::Base
         scores["mate-special"] += result["special-total-weight"]
         scores["mate-growup"] += result["growup-total-weight"]
 
+        mate_scores += [final]
+
         if self.is_manager
           scores["mate-team-normal"] += result["team-normal-total-weight"]
           scores["mate-team-growup"] += result["team-growup-total-weight"]
@@ -84,7 +93,7 @@ class Person < ActiveRecord::Base
       end
     end
 
-    logger.debug "scores: #{scores}, mate_num=#{mate_num}"
+    # logger.debug "scores: #{scores}, mate_num=#{mate_num}"
 
     mate_num = 1 if mate_num == 0
     scores["mate"] = (scores["mate"] / mate_num)
@@ -102,6 +111,18 @@ class Person < ActiveRecord::Base
     scores["salary-mixed"] = scores["total"] * self.salary_weight
 
     scores.each_pair { |k, v| scores[k] = v.round(2) }
+
+    scores["mate-scores"] = mate_scores
+
+    scores
+  end
+
+  def self.staff_number(scope = :all)
+    if scope == :all
+      Person.count - 1
+    else
+      Person.where(department: scope).count - 1
+    end
   end
 
 end

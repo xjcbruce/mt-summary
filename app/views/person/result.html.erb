@@ -18,6 +18,8 @@
     <th>等级系数加权后</th>
     <th>个人总结</th>
     <th>评分报告</th>
+    <th>汇总报告</th>
+    <th>汇总报告</th>
   </tr>
 
   <% @persons.each do |person| %>
@@ -40,6 +42,8 @@
         <td><%= scores["salary-mixed"] %></td>
         <td><%= link_to '查看', { controller: 'annual_summary', action: 'show', id: person}, target: '_blank' %></td>
         <td><%= link_to '查看', { controller: 'person', action: 'report_to_one', code: person.access_code}, target: '_blank' %></td>
+        <td><%= link_to '查看', { controller: 'rate_result', action: 'report', code: person.access_code}, target: '_blank' %></td>
+        <td><%= link_to '下载', { controller: 'rate_result', action: 'report', format: 'xlsx', code: person.access_code} %></td>
       </tr>
   <% end %>
 </table>
